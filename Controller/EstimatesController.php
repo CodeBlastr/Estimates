@@ -79,9 +79,9 @@ class EstimatesController extends EstimatesAppController {
 	}
 
 	function add($model = null, $foreignKey = null) {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Estimate->create();
-			if ($this->Estimate->saveAll($this->data)) {
+			if ($this->Estimate->saveAll($this->request->data)) {
 				$this->Session->setFlash(__('The estimate has been saved', true));
 				$this->redirect(array('action' => 'view', $this->Estimate->id));
 			} else {
@@ -100,20 +100,20 @@ class EstimatesController extends EstimatesAppController {
 	}
 
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid estimate', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->Estimate->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->Estimate->save($this->request->data)) {
 				$this->Session->setFlash(__('The estimate has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The estimate could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Estimate->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->Estimate->read(null, $id);
 		}
 		$estimateTypes = $this->Estimate->EstimateType->find('list');
 		$estimateStatuses = $this->Estimate->EstimateStatus->find('list');
@@ -149,9 +149,9 @@ class EstimatesController extends EstimatesAppController {
 	}
 
 	function admin_add() {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Estimate->create();
-			if ($this->Estimate->save($this->data)) {
+			if ($this->Estimate->save($this->request->data)) {
 				$this->Session->setFlash(__('The estimate has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -167,20 +167,20 @@ class EstimatesController extends EstimatesAppController {
 	}
 
 	function admin_edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid estimate', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->Estimate->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->Estimate->save($this->request->data)) {
 				$this->Session->setFlash(__('The estimate has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The estimate could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Estimate->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->Estimate->read(null, $id);
 		}
 		$estimateTypes = $this->Estimate->EstimateType->find('list');
 		$estimateStatuses = $this->Estimate->EstimateStatus->find('list');

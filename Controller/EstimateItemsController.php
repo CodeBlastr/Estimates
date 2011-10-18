@@ -17,9 +17,9 @@ class EstimateItemsController extends EstimatesAppController {
 	}
 
 	function add() {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->EstimateItem->create();
-			if ($this->EstimateItem->save($this->data)) {
+			if ($this->EstimateItem->save($this->request->data)) {
 				$this->Session->setFlash(__('The estimate item has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -32,20 +32,20 @@ class EstimateItemsController extends EstimatesAppController {
 	}
 
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid estimate item', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->EstimateItem->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->EstimateItem->save($this->request->data)) {
 				$this->Session->setFlash(__('The estimate item has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The estimate item could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->EstimateItem->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->EstimateItem->read(null, $id);
 		}
 		$estimates = $this->EstimateItem->Estimate->find('list');
 		$estimateItemTypes = $this->EstimateItem->EstimateItemType->find('list');
@@ -80,9 +80,9 @@ class EstimateItemsController extends EstimatesAppController {
 	}
 
 	function admin_add() {
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->EstimateItem->create();
-			if ($this->EstimateItem->save($this->data)) {
+			if ($this->EstimateItem->save($this->request->data)) {
 				$this->Session->setFlash(__('The estimate item has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -97,20 +97,20 @@ class EstimateItemsController extends EstimatesAppController {
 	}
 
 	function admin_edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid estimate item', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->EstimateItem->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->EstimateItem->save($this->request->data)) {
 				$this->Session->setFlash(__('The estimate item has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The estimate item could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->EstimateItem->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->EstimateItem->read(null, $id);
 		}
 		$estimates = $this->EstimateItem->Estimate->find('list');
 		$estimateItemTypes = $this->EstimateItem->EstimateItemType->find('list');
