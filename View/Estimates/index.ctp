@@ -1,5 +1,5 @@
 <div class="estimates index">
-	<h2><?php __('Estimates');?></h2>
+	<h2><?php echo __('Estimates');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('estimate_number');?></th>
@@ -7,7 +7,7 @@
 			<th><?php echo $this->Paginator->sort('expiration_date');?></th>
 			<th><?php echo $this->Paginator->sort('total');?></th>
 			<th><?php echo $this->Paginator->sort('is_accepted');?></th>
-			<th class="actions"><?php __('Actions');?></th>
+			<th class="actions"><?php echo __('Actions');?></th>
 	</tr>
 	<?php
 	$i = 0;
@@ -21,7 +21,7 @@
 		<td><?php echo $estimate['Estimate']['estimate_number']; ?>&nbsp;</td>
 		<td><?php echo $estimate['Estimate']['name']; ?>&nbsp;</td>
 		<td><?php echo $estimate['Estimate']['expiration_date']; ?>&nbsp;</td>
-		<td><?php __('$'); echo $estimate['Estimate']['total']; ?>&nbsp;</td>
+		<td><?php echo __('$'); echo $estimate['Estimate']['total']; ?>&nbsp;</td>
 		<td><?php echo $estimate['Estimate']['is_accepted']?'yes':'no' ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $estimate['Estimate']['id'])); ?>
@@ -46,7 +46,7 @@
 	</div>
 </div>
 <!--div class="actions">
-	<h3><?php __('Actions'); ?></h3>
+	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New Estimate', true), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('List Enumerations', true), array('controller' => 'enumerations', 'action' => 'index')); ?> </li>

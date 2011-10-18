@@ -1,7 +1,7 @@
 <div class="estimates form">
 <?php echo $this->Form->create('Estimate');?>
 	<fieldset>
- 		<legend><?php __('Add Estimate'); ?></legend>
+ 		<legend><?php echo __('Add Estimate'); ?></legend>
 	<?php
 		echo $this->Form->input('Estimate.recipient_id');
 		echo $this->Form->input('Estimate.estimate_number');
@@ -20,7 +20,7 @@
 <div class="addMoreEstimateItem">
 		<div class="formRow">   
 	<fieldset>
- 		<legend><?php __('Add Estimate Item'); ?></legend>
+ 		<legend><?php echo __('Add Estimate Item'); ?></legend>
 	<?php
 		echo $this->Form->input('EstimateItem.0.estimate_item_type_id');
 		echo $this->Form->input('EstimateItem.0.foreign_key');
@@ -36,7 +36,7 @@
 </div>
 </div>
 	<fieldset>
- 		<legend><?php __('Cost'); ?></legend>
+ 		<legend><?php echo __('Cost'); ?></legend>
 	<?php
 		echo $this->Form->input('Estimate.discount', array('after' => '%'));
 		echo $this->Form->input('Estimate.sub_total');
@@ -50,7 +50,7 @@
 <?php echo $this->Form->end(__('Submit', true));?>
 </div>
 <div class="actions">
-	<h3><?php __('Actions'); ?></h3>
+	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 
 		<li><?php echo $this->Html->link(__('List Estimates', true), array('action' => 'index'));?></li>

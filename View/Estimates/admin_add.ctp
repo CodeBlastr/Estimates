@@ -1,7 +1,7 @@
 <div class="estimates form">
 <?php echo $this->Form->create('Estimate');?>
 	<fieldset>
- 		<legend><?php __('Admin Add Estimate'); ?></legend>
+ 		<legend><?php echo __('Admin Add Estimate'); ?></legend>
 	<?php
 		echo $this->Form->input('estimate_type_id');
 		echo $this->Form->input('estimate_status_id');
@@ -25,7 +25,7 @@
 <?php echo $this->Form->end(__('Submit', true));?>
 </div>
 <div class="actions">
-	<h3><?php __('Actions'); ?></h3>
+	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 
 		<li><?php echo $this->Html->link(__('List Estimates', true), array('action' => 'index'));?></li>
