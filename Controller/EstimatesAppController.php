@@ -18,78 +18,8 @@
  * @since         Zuha(tm) v 0.0.1
  * @license       GPL v3 License (http://www.gnu.org/licenses/gpl.html) and Future Versions
  */
-App::import(array(
-	'type' => 'File', 
-	'name' => 'Estimates.EstimatesConfig', 
-	'file' =>  '..' . DS . 'plugins'  . DS  . 'estimates'  . DS  . 'config'. DS .'core.php'
-));
 class EstimatesAppController extends AppController {
-
 	
-	/*
-	 * Override the $components in Zuha's AppController for removing ACL  
-	 */
-	
-	var $components = array('RequestHandler', 'Email', 'Auth' , 'Session');
-	
-	
-	/*
-	 * Check if the content belongs to the specified user .
-	 * If admin always returns true.
-	 * @param {string} model -> The model name 
-	 * @param {int} id -> The id of the record
-	 * @return bool
-	 */
-	
-	function beforeFilter(){
-		parent::beforeFilter();
-		if($this->Auth->user('isadmin')){
-			$this->set('user_is_admin' , true);
-		}else{
-			$this->set('user_is_admin' , false);
-		}
-	
-		$Config = EstimatesConfig::getInstance();
-		#sets display values
-		if (!empty($Config->settings[$this->request->params['controller'].Inflector::camelize($this->request->params['action']).'View'])) {
-			$this->set('settings', $Config->settings[$this->request->params['controller'].Inflector::camelize($this->request->params['action']).'View']);
-		}
-		if (!empty($Config->settings[$this->request->params['controller'].Inflector::camelize($this->request->params['action']).'Controller'])) {
-			$this->settings = $Config->settings[$this->request->params['controller'].Inflector::camelize($this->request->params['action']).'Controller'];
-		}
-	}
-	
-	function __content_belongs($model , $id){
-		$uid = $this->Auth->user('id');
-		//check if user is admin
-		if($this->Auth->user('isadmin')){
-			//Approve the action if user is admin
-			return true;
-		}else{
-			//if user is not admin get the necessary data
-			$this->loadModel($model);
-			$dat = $this->$model->findById($id);
-			if($dat[$model]["creator_id"] == $uid){	
-				return true;
-			}else{
-				return false;
-			}
-		}
-		
-	}
-	
-	/*
-	 * Cehck if user is admin for admin functions
-	 * @return {bool}
-	 */
-	
-	function __is_admin(){
-		if($this->Auth->user('isadmin')){
-			return true;
-		}else{
-			$this->redirect(array('plugin'=>null, 'controller'=>'pages' , 'action'=>'auth' , 'admin'=>false));
-		}
-	}
 }
 
 ?>
