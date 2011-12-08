@@ -96,10 +96,10 @@ class Estimate extends EstimatesAppModel {
 	
 	function beforeSave() {
 		# give the estimate a name for easy drop down fields in other parts
-		if (!empty($this->request->data['Estimate']['estimate_number']) && !empty($this->request->data['Estimate']['id'])) {
-			$this->request->data['Estimate']['name'] = __('Estimate: ', true).$this->request->data['Estimate']['estimate_number'];
+		if (!empty($this->data['Estimate']['estimate_number']) && !empty($this->data['Estimate']['id'])) {
+			$this->data['Estimate']['name'] = __('Estimate: ', true).$this->data['Estimate']['estimate_number'];
 		} else {
-			$this->request->data['Estimate']['name'] = __('Estimate: ', true).$this->request->data['Estimate']['id'];
+			$this->data['Estimate']['name'] = __('Estimate: ', true).$this->data['Estimate']['id'];
 		}
 		return true;
 	}
