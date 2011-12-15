@@ -1,7 +1,8 @@
 <?php
 class EstimateItemsController extends EstimatesAppController {
 
-	var $name = 'EstimateItems';
+	public $name = 'EstimateItems';
+	public $uses = 'Estimates.EstimateItem';
 
 	function index() {
 		$this->EstimateItem->recursive = 0;

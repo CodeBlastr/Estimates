@@ -1,8 +1,9 @@
 <?php
 class EstimatesController extends EstimatesAppController {
 
-	var $name = 'Estimates';
-	var $components = array('Comments.Comments' => array('userModelClass' => 'Users.User'));
+	public $name = 'Estimates';
+	public $uses = 'Estimates.Estimate';
+	public $components = array('Comments.Comments' => array('userModelClass' => 'Users.User'));
 	
 	function beforeFilter() {
 		parent::beforeFilter();
