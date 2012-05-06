@@ -10,27 +10,6 @@ class EstimateItem extends EstimatesAppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		),
-		'EstimateItemType' => array(
-			'className' => 'Enumeration',
-			'foreignKey' => 'estimate_item_type_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Creator' => array(
-			'className' => 'Users.User',
-			'foreignKey' => 'creator_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Modifier' => array(
-			'className' => 'Users.User',
-			'foreignKey' => 'modifier_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
 		)
 	);
 }

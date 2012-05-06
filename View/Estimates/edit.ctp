@@ -4,8 +4,8 @@
  		<legend><?php echo __('Edit Estimate'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('estimate_type_id');
-		echo $this->Form->input('estimate_status_id');
+		//echo $this->Form->input('estimate_type_id');
+		//echo $this->Form->input('estimate_status_id');
 		echo $this->Form->input('estimate_number');
 		echo $this->Form->input('po_number');
 		echo $this->Form->input('name');

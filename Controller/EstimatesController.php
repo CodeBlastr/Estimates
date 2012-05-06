@@ -28,14 +28,12 @@ class EstimatesController extends EstimatesAppController {
 					'Estimated.foreign_key' => $foreignKey,
 					),
 				'contain' => array(
-					'EstimateStatus',
 					'Recipient',
 					),
 				);
 		} else {
 			$options = array(
 				'contain' => array(
-					'EstimateStatus',
 					'Recipient',
 					),
 				);
@@ -93,11 +91,10 @@ class EstimatesController extends EstimatesAppController {
 			$this->Model = ClassRegistry::init($model);
 			$foreignRecord = $this->Model->find('first', array('conditions' => array($model.'.id' => $foreignKey)));
 		}
-		$estimateTypes = $this->Estimate->EstimateType->find('list');
-		$estimateStatuses = $this->Estimate->EstimateStatus->find('list');
+		//$estimateTypes = $this->Estimate->EstimateType->find('list');
+		//$estimateStatuses = $this->Estimate->EstimateStatus->find('list');
 		$recipients = $this->Estimate->Recipient->find('list');
-		$estimateItemTypes = $this->Estimate->EstimateItem->EstimateItemType->find('list');
-		$this->set(compact('model', 'foreignKey', 'foreignRecord', 'estimateTypes', 'estimateStatuses', 'recipients', 'estimateItemTypes'));
+		$this->set(compact('model', 'foreignKey', 'foreignRecord', 'recipients'));
 	}
 
 	function edit($id = null) {
@@ -116,12 +113,12 @@ class EstimatesController extends EstimatesAppController {
 		if (empty($this->request->data)) {
 			$this->request->data = $this->Estimate->read(null, $id);
 		}
-		$estimateTypes = $this->Estimate->EstimateType->find('list');
-		$estimateStatuses = $this->Estimate->EstimateStatus->find('list');
+		//$estimateTypes = $this->Estimate->EstimateType->find('list');
+		//$estimateStatuses = $this->Estimate->EstimateStatus->find('list');
 		$recipients = $this->Estimate->Recipient->find('list');
 		$creators = $this->Estimate->Creator->find('list');
 		$modifiers = $this->Estimate->Modifier->find('list');
-		$this->set(compact('estimateTypes', 'estimateStatuses', 'recipients', 'creators', 'modifiers'));
+		$this->set(compact('recipients', 'creators', 'modifiers'));
 	}
 
 	function delete($id = null) {

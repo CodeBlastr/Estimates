@@ -27,20 +27,6 @@ class Estimate extends EstimatesAppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $belongsTo = array(
-		'EstimateType' => array(
-			'className' => 'Enumeration',
-			'foreignKey' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'EstimateStatus' => array(
-			'className' => 'Enumeration',
-			'foreignKey' => 'estimate_status_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
 		'Recipient' => array(
 			'className' => 'Users.User',
 			'foreignKey' => 'recipient_id',
