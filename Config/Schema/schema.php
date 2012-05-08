@@ -5,6 +5,11 @@ class EstimatesSchema extends CakeSchema {
 
 	public function __construct($options = array()) {
 		parent::__construct();
+		$this->renames = array(
+			'estimate_items' => array('estimate_item_type_id' => 'estimate_item_type'),
+			'estimates' => array('estimate_type_id' => 'estimate_type'),
+			'estimates' => array('estimate_status_id' => 'estimate_status')
+			);
 	}
 
 	public function before($event = array()) {
