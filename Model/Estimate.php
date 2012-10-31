@@ -66,7 +66,11 @@ class Estimate extends EstimatesAppModel {
 		),
 	);
 	
-	
+/**
+ * Before Save method
+ *
+ * @return bool
+ */
 	public function beforeSave() {
 		// give the estimate a name for easy drop down fields in other parts
 		if (!empty($this->data['Estimate']['estimate_number']) && !empty($this->data['Estimate']['id'])) {
@@ -74,9 +78,26 @@ class Estimate extends EstimatesAppModel {
 		} else {
 			$this->data['Estimate']['name'] = __('Estimate: ', true) . ($this->find('count') + 1);
 		}
+		
+		if (in_array('Activities', CakePlugin::loaded())) {
+			// logs when an estimate is created
+			$this->Behaviors->attach('Activities.Loggable', array(
+				'nameField' => 'name', 
+				'descriptionField' => 'total',
+				'actionDescription' => 'estimate created', 
+				'userField' => '', 
+				'parentForeignKey' => ''
+				));
+		}
+		
 		return true;
 	}
 	
+/** 
+ * Accept method
+ * 
+ * @return bool
+ */
 	public function accept($id) {
 		$estimate = $this->findById($id);
 		if(!empty($estimate)) {
