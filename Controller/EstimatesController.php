@@ -5,114 +5,76 @@ class EstimatesController extends EstimatesAppController {
 	public $uses = 'Estimates.Estimate';
 	public $components = array('Comments.Comments' => array('userModelClass' => 'Users.User'));
 	
-	function beforeFilter() {
+	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->passedArgs['comment_view_type'] = 'threaded';
 	}
 
-	function index($model = null, $foreignKey = null) {
-		if (!empty($model) && !empty($foreignKey)) {
-			$options = array(
-				'joins' => array(
-					array(
-						'table' => 'estimated',
-						'alias' => 'Estimated',
-						'type' => 'LEFT',
-						'conditions' => array(
-								'Estimated.estimate_id = Estimate.id',
-								),
-							),
-						),
-				'conditions' => array(
-					'Estimated.model' => $model,
-					'Estimated.foreign_key' => $foreignKey,
-					),
-				'contain' => array(
-					'Recipient',
-					),
-				);
-		} else {
-			$options = array(
-				'contain' => array(
-					'Recipient',
-					),
-				);
-		} 
-	
-		$this->paginate = $options;
+	public function index($model = null, $foreignKey = null) {
 		$this->set('estimates', $this->paginate());
 	}
 
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid estimate', true));
-			$this->redirect(array('action' => 'index'));
+	public function view($id = null) {
+		$this->Estimate->id = $id;
+		if (!$this->Estimate->exists()) {
+			throw new NotFoundException(__('Estimate not found'));
 		}
-		$this->Estimate->contain(array('Creator', 'Estimated'));
+		
+		$this->Estimate->contain(array('EstimateItem', 'Contact', 'Creator', 'Recipient'));
 		$this->set('estimate', $this->Estimate->read(null, $id));
 	}
 
-	function accept($id = null) {
-		if ($id) {
-			if ($this->Estimate->accept($id)){
-				$estimate = $this->Estimate->find('first', array(
-					'conditions' => array(
-						'Estimate.id' => $id
-						),
-					'contain' => array(
-						'Creator',
-						),
-					)); 
-				$message = '<p>Congratulations, your estimate was accepted. You can review your estimate <a href="'.$_SERVER['HTTP_HOST'].'/estimates/estimates/view/'.$estimate['Estimate']['id'].'">here</a></p>';
-				$this->__sendMail($estimate['Creator']['email'], 'Estimate Accepted', $message, $template = 'default');
-				$this->Session->setFlash(__('Estimate accepted', true));
-				$this->redirect(array('action' => 'view', $id));
-			} else {
-				$this->Session->setFlash(__('There was a problem please try again.', true));
-				$this->redirect(array('action' => 'view', $id));
-			}
-		} else {
-			$this->Session->setFlash(__('Invalid estimate', true));
+	public function accept($id = null) {
+		$this->Estimate->id = $id;
+		if (!$this->Estimate->exists()) {
+			throw new NotFoundException(__('Estimate not found'));
+		}
+		
+		try {
+			$this->Estimate->accept($id);
+			$this->Session->setFlash(__('Estimate accepted'));
+			$this->redirect(array('action' => 'view', $id));
+		} catch (Exception $e) {
+			$this->Session->setFlash($e->getMessage());
 			$this->redirect(array('action' => 'view', $id));
 		}
 	}
 
-	function add($model = null, $foreignKey = null) {
+	public function add($model = null, $foreignKey = null) {
 		if (!empty($this->request->data)) {
-			$this->Estimate->create();
-			if ($this->Estimate->saveAll($this->request->data)) {
-				$this->Session->setFlash(__('The estimate has been saved', true));
+			try {
+				$this->Estimate->create();
+				$this->Estimate->saveAll($this->request->data);
+				$this->Session->setFlash(__('The estimate has been saved'));
 				$this->redirect(array('action' => 'view', $this->Estimate->id));
-			} else {
-				$this->Session->setFlash(__('The estimate could not be saved. Please, try again.', true));
+			} catch (Exception $e) {
+				$this->Session->setFlash($e->getMessage());
 			}
 		}
 		if (!empty($model)) {
 			$this->Model = ClassRegistry::init($model);
 			$foreignRecord = $this->Model->find('first', array('conditions' => array($model.'.id' => $foreignKey)));
 		}
-		//$estimateTypes = $this->Estimate->EstimateType->find('list');
-		//$estimateStatuses = $this->Estimate->EstimateStatus->find('list');
 		$recipients = $this->Estimate->Recipient->find('list');
 		$this->set(compact('model', 'foreignKey', 'foreignRecord', 'recipients'));
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid estimate', true));
-			$this->redirect(array('action' => 'index'));
+	public function edit($id = null) {
+		$this->Estimate->id = $id;
+		if (!$this->Estimate->exists()) {
+			throw new NotFoundException(__('Estimate not found'));
 		}
 		if (!empty($this->request->data)) {
-			if ($this->Estimate->save($this->request->data)) {
-				$this->Session->setFlash(__('The estimate has been saved', true));
+			try {
+				$this->Estimate->save($this->request->data);
+				$this->Session->setFlash(__('The estimate has been saved'));
 				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The estimate could not be saved. Please, try again.', true));
+			} catch (Exception $e) {
+				$this->Session->setFlash($e->getMessage());
 			}
 		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->Estimate->read(null, $id);
-		}
+		
+		$this->request->data = $this->Estimate->read(null, $id);
 		//$estimateTypes = $this->Estimate->EstimateType->find('list');
 		//$estimateStatuses = $this->Estimate->EstimateStatus->find('list');
 		$recipients = $this->Estimate->Recipient->find('list');
@@ -121,10 +83,10 @@ class EstimatesController extends EstimatesAppController {
 		$this->set(compact('recipients', 'creators', 'modifiers'));
 	}
 
-	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for estimate', true));
-			$this->redirect(array('action'=>'index'));
+	public function delete($id = null) {
+		$this->Estimate->id = $id;
+		if (!$this->Estimate->exists()) {
+			throw new NotFoundException(__('Estimate not found'));
 		}
 		if ($this->Estimate->delete($id)) {
 			$this->Session->setFlash(__('Estimate deleted', true));
@@ -134,4 +96,3 @@ class EstimatesController extends EstimatesAppController {
 		$this->redirect(array('action' => 'index'));
 	}
 }
-?>

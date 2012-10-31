@@ -1,8 +1,8 @@
 <?php
 class Estimate extends EstimatesAppModel {
-	var $name = 'Estimate';
-	var $displayField = 'name';
-	var $validate = array(
+	public $name = 'Estimate';
+	public $displayField = 'name';
+	public $validate = array(
 		'is_accepted' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
@@ -26,7 +26,14 @@ class Estimate extends EstimatesAppModel {
 	);
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-	var $belongsTo = array(
+	public $belongsTo = array(
+		'Contact' => array(
+			'className' => 'Contacts.Contact',
+			'foreignKey' => 'foreign_key',
+			'conditions' => array('model' => 'Contact'),
+			'fields' => '',
+			'order' => ''
+		),
 		'Recipient' => array(
 			'className' => 'Users.User',
 			'foreignKey' => 'recipient_id',
@@ -41,16 +48,9 @@ class Estimate extends EstimatesAppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'Modifier' => array(
-			'className' => 'Users.User',
-			'foreignKey' => 'modifier_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
 	);
 
-	var $hasMany = array(
+	public $hasMany = array(
 		'EstimateItem' => array(
 			'className' => 'Estimates.EstimateItem',
 			'foreignKey' => 'estimate_id',
@@ -64,23 +64,10 @@ class Estimate extends EstimatesAppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'Estimated' => array(
-			'className' => 'Estimates.Estimated',
-			'foreignKey' => 'estimate_id',
-			'dependent' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
 	);
 	
 	
-	function beforeSave() {
+	public function beforeSave() {
 		// give the estimate a name for easy drop down fields in other parts
 		if (!empty($this->data['Estimate']['estimate_number']) && !empty($this->data['Estimate']['id'])) {
 			$this->data['Estimate']['name'] = __('Estimate: ', true).$this->data['Estimate']['estimate_number'];
@@ -90,7 +77,7 @@ class Estimate extends EstimatesAppModel {
 		return true;
 	}
 	
-	function accept($id) {
+	public function accept($id) {
 		$estimate = $this->findById($id);
 		if(!empty($estimate)) {
 			$estimate['Estimate']['is_accepted'] = 1;
@@ -106,4 +93,3 @@ class Estimate extends EstimatesAppModel {
 	}
 
 }
-?>

@@ -2,4 +2,3 @@
 class EstimatesAppModel extends AppModel {
 
 }
-?>
