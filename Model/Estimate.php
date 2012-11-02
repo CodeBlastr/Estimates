@@ -89,7 +89,6 @@ class Estimate extends EstimatesAppModel {
 				'parentForeignKey' => ''
 				));
 		}
-		
 		return true;
 	}
 	
