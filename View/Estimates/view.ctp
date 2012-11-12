@@ -1,7 +1,15 @@
+
+<div class="well well-large pull-right last span3">
+	<span class="label label-info"><?php echo !empty($estimate['Estimate']['total']) ? ZuhaInflector::pricify($estimate['Estimate']['total']) : 'No Total'; ?> </span>
+</div>
+
 <div class="estimates view">
-	
-    <?php debug($estimate); ?>
-	
+	<?php
+	echo '<h4>Details ' . $this->Html->link('Edit', array('plugin' => 'estimates', 'controller' => 'estimates', 'action' => 'edit', $estimate['Estimate']['id']), array('class' => 'btn btn-mini btn-primary')) . '</h4>';
+    echo $estimate['Estimate']['introduction'];
+    echo $estimate['Estimate']['description'];
+    echo $estimate['Estimate']['conclusion']; ?>
+
 </div>
 
 

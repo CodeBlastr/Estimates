@@ -1,16 +1,16 @@
 <div class="estimates form">
 <?php echo $this->Form->create('Estimate');?>
 	<fieldset>
- 		<legend><?php echo __('Add Estimate'); ?></legend>
 	<?php
 		echo $this->Form->input('Estimate.recipient_id');
 		echo $this->Form->input('Estimate.estimate_number');
+		echo $this->Form->input('Estimate.model', array('type' => 'hidden', 'value' => 'Estimate'));
 		echo $this->Form->input('Estimate.issue_date');
 		echo $this->Form->input('Estimate.expiration_date');
 		echo $this->Form->input('Estimate.po_number');
 		#echo $this->Form->input('Estimate.estimate_type_id');
 		#echo $this->Form->input('Estimate.estimate_status_id');
-		echo $this->Form->input('Estimate.introduction' /*, array('type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))) */);
+		echo $this->Form->input('Estimate.description', array('type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image'))));
 		#echo $this->Form->input('Estimate.conclusion' /*, array('type' => 'richtext', 'ckeSettings' => array('buttons' => array('Bold','Italic','Underline','FontSize','TextColor','BGColor','-','NumberedList','BulletedList','Blockquote','JustifyLeft','JustifyCenter','JustifyRight','-','Link','Unlink','-', 'Image')))*/);
 		echo $this->Form->input('Estimate.is_accepted', array('value' => 0, 'type' => 'hidden'));
 		echo $this->Form->input('Estimate.is_archived', array('value' => 0, 'type' => 'hidden'));
@@ -55,18 +55,12 @@ $this->set('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Estimates',
 		'items' => array(
-			$this->Html->link(__('List Estimates', true), array('action' => 'index')),
-			$this->Html->link(__('List Enumerations', true), array('controller' => 'enumerations', 'action' => 'index')),
-			$this->Html->link(__('New Estimate Type', true), array('controller' => 'enumerations', 'action' => 'add')),
-			$this->Html->link(__('List Users', true), array('controller' => 'users', 'action' => 'index')),
-			$this->Html->link(__('New Recipient', true), array('controller' => 'users', 'action' => 'add')),
-			$this->Html->link(__('List Estimateds', true), array('controller' => 'estimateds', 'action' => 'index')),
-			$this->Html->link(__('New Estimated', true), array('controller' => 'estimateds', 'action' => 'add')),
+			$this->Html->link(__('List', true), array('action' => 'index')),
 			)
 		),
-	)));
-?>
-<?php echo $this->Html->script('/js/jquery.formmodifier.js');?>
+	))); ?>
+
+<?php echo $this->Html->script('/js/plugins/jquery.formmodifier');?>
 <a id="addMoreEstimateItem_lnk" href="#">New Estimated Item</a>
 <script type="text/javascript">
 $(function() {

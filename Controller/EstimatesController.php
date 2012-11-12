@@ -1,19 +1,51 @@
 <?php
 class EstimatesController extends EstimatesAppController {
 
+/**
+ * Name
+ * 
+ * @var string
+ */
 	public $name = 'Estimates';
+    
+/**
+ * Uses
+ * 
+ * @var string
+ */
 	public $uses = 'Estimates.Estimate';
+    
+/**
+ * Components
+ * 
+ * @var array
+ */
 	public $components = array('Comments.Comments' => array('userModelClass' => 'Users.User'));
 	
+/**
+ * Before Filter
+ */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->passedArgs['comment_view_type'] = 'threaded';
 	}
 
+/**
+ * Index method
+ * 
+ * @param type $model
+ * @param type $foreignKey
+ */
 	public function index($model = null, $foreignKey = null) {
 		$this->set('estimates', $this->paginate());
 	}
 
+/**
+ * View method
+ * 
+ * @param type $id
+ * @throws NotFoundException
+ */
 	public function view($id = null) {
 		$this->Estimate->id = $id;
 		if (!$this->Estimate->exists()) {
@@ -21,9 +53,17 @@ class EstimatesController extends EstimatesAppController {
 		}
 		
 		$this->Estimate->contain(array('EstimateItem', 'Contact', 'Creator', 'Recipient'));
-		$this->set('estimate', $this->Estimate->read(null, $id));
+        $estimate = $this->Estimate->read(null, $id);
+		$this->set('estimate', $estimate);
+        $this->set('page_title_for_layout', $estimate['Estimate']['name']);
 	}
 
+/**
+ * Accept method
+ * 
+ * @param type $id
+ * @throws NotFoundException
+ */
 	public function accept($id = null) {
 		$this->Estimate->id = $id;
 		if (!$this->Estimate->exists()) {
@@ -39,7 +79,13 @@ class EstimatesController extends EstimatesAppController {
 			$this->redirect(array('action' => 'view', $id));
 		}
 	}
-
+    
+/**
+ * Add method
+ * 
+ * @param type $model
+ * @param type $foreignKey
+ */
 	public function add($model = null, $foreignKey = null) {
 		if (!empty($this->request->data)) {
 			try {
@@ -59,6 +105,12 @@ class EstimatesController extends EstimatesAppController {
 		$this->set(compact('model', 'foreignKey', 'foreignRecord', 'recipients'));
 	}
 
+/**
+ * Edit method
+ * 
+ * @param type $id
+ * @throws NotFoundException
+ */
 	public function edit($id = null) {
 		$this->Estimate->id = $id;
 		if (!$this->Estimate->exists()) {
@@ -67,7 +119,7 @@ class EstimatesController extends EstimatesAppController {
 		if (!empty($this->request->data)) {
 			try {
 				$this->Estimate->save($this->request->data);
-				$this->Session->setFlash(__('The estimate has been saved'));
+				$this->Session->setFlash(__('Estimate has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} catch (Exception $e) {
 				$this->Session->setFlash($e->getMessage());
@@ -78,11 +130,15 @@ class EstimatesController extends EstimatesAppController {
 		//$estimateTypes = $this->Estimate->EstimateType->find('list');
 		//$estimateStatuses = $this->Estimate->EstimateStatus->find('list');
 		$recipients = $this->Estimate->Recipient->find('list');
-		$creators = $this->Estimate->Creator->find('list');
-		$modifiers = $this->Estimate->Modifier->find('list');
-		$this->set(compact('recipients', 'creators', 'modifiers'));
+		$this->set(compact('recipients'));
 	}
 
+/**
+ * Delete method
+ * 
+ * @param type $id
+ * @throws NotFoundException
+ */
 	public function delete($id = null) {
 		$this->Estimate->id = $id;
 		if (!$this->Estimate->exists()) {

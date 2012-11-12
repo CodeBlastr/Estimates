@@ -1,5 +1,4 @@
 <div class="estimates index">
-	<h2><?php echo __('Estimates');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('estimate_number');?></th>
@@ -45,3 +44,16 @@
 		<li><?php echo $this->Html->link(__('New Estimated', true), array('controller' => 'estimateds', 'action' => 'add')); ?> </li>
 	</ul>
 </div-->
+
+
+        
+<?php
+// set the contextual menu items
+$this->set('context_menu', array('menus' => array(
+	array(
+		'heading' => 'Estimates',
+		'items' => array(
+			$this->Html->link(__('Add'), array('plugin' => 'estimates', 'controller'=> 'estimates', 'action' => 'add')),
+			),
+		),
+	))); ?>
