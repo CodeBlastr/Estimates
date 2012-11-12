@@ -18,7 +18,7 @@
 		echo $this->Form->input('total');
 		echo $this->Form->input('is_accepted');
 		echo $this->Form->input('is_archived');
-		echo $this->Form->input('recipient_id');
+		echo $this->Form->input('recipient_id', array('empty' => '-- Optional --'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>
@@ -29,6 +29,7 @@ $this->set('context_menu', array('menus' => array(
 	array(
 		'heading' => 'Estimates',
 		'items' => array(
+            $this->Html->link(__('%s', Inflector::singularize(Inflector::humanize($relatedRecord['controller']))), $relatedRecord), 
 			$this->Html->link(__('List'), array('action' => 'index')),
 			$this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Estimate.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('Estimate.id'))),
 			)

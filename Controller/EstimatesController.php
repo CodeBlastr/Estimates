@@ -56,6 +56,7 @@ class EstimatesController extends EstimatesAppController {
         $estimate = $this->Estimate->read(null, $id);
 		$this->set('estimate', $estimate);
         $this->set('page_title_for_layout', $estimate['Estimate']['name']);
+        $this->set('relatedRecord', array('plugin' => Inflector::tableize(ZuhaInflector::pluginize($estimate['Estimate']['model'])), 'controller' => Inflector::tableize($estimate['Estimate']['model']), 'action' => 'view', $estimate['Estimate']['foreign_key']));
 	}
 
 /**
@@ -131,6 +132,7 @@ class EstimatesController extends EstimatesAppController {
 		//$estimateStatuses = $this->Estimate->EstimateStatus->find('list');
 		$recipients = $this->Estimate->Recipient->find('list');
 		$this->set(compact('recipients'));
+        $this->set('relatedRecord', array('plugin' => Inflector::tableize(ZuhaInflector::pluginize($this->request->data['Estimate']['model'])), 'controller' => Inflector::tableize($this->request->data['Estimate']['model']), 'action' => 'view', $this->request->data['Estimate']['foreign_key']));
 	}
 
 /**
