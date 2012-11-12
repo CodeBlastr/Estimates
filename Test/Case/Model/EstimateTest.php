@@ -12,8 +12,8 @@ class EstimateTestCase extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-        'plugin.estimates.estimate',
-        'plugin.activities.activity',
+        'plugin.Estimates.Estimate',
+        'plugin.Activities.Activity',
         );
 
 /**
@@ -54,7 +54,7 @@ class EstimateTestCase extends CakeTestCase {
 	public function testSaveWithLoggable() {
 		$data['Estimate']['total'] = '5000.00';
 		$this->Estimate->save($data);
-		$result = $this->Activity->find('first');
+		$result = $this->Activity->read(null, $this->Activity->id);
 		
         $this->assertEqual($result['Activity']['action_description'], 'estimate created'); // test that activity is logged
 	}
