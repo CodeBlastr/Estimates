@@ -1,4 +1,6 @@
 <?php
+App::uses('EstimatesAppModel', 'Estimates.Model'); 
+
 class Estimate extends EstimatesAppModel {
 	public $name = 'Estimate';
 	public $displayField = 'name';
@@ -111,5 +113,50 @@ class Estimate extends EstimatesAppModel {
 		}
 		break;
 	}
+    
+    /**
+ * This trims an object, formats it's values if you need to, and returns the data to be merged with the Transaction data.
+ * 
+ * @param string $key
+ * @return array The necessary fields to add a Transaction Item
+ */
+    public function mapTransactionItem($key) {
+        
+        $itemData = $this->find('first', array('conditions' => array('id' => $key)));
+        
+        $fieldsToCopyDirectly = array(
+            'name',
+            'weight',
+            'height',
+            'width',
+            'length',
+            'shipping_type',
+            'shipping_charge',
+            'payment_type',
+            'arb_settings',
+            'is_virtual'
+            );
+        
+        foreach($itemData['Product'] as $k => $v) {
+            if(in_array($k, $fieldsToCopyDirectly)) {
+                $return['TransactionItem'][$k] = $v;
+            }
+        }
+        return $return;
+    }
+    
+    
+    public function afterSuccessfulPayment($data) {  
+        
+      // debug($data);
+       foreach($data['TransactionItem'] as $TransactionItem) {
+           $this->data['Estimate']['id']=$TransactionItem['foreign_key'];
+           $this->data['Estimate']['estimate_status']='accepted'; 
+           $this->save($this->data);
+       }
+        
+    }                                               
+    
+    
 
 }
