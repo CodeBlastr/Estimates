@@ -145,15 +145,33 @@ class Estimate extends EstimatesAppModel {
         return $return;
     }
     
-    
+    /**
+    * After Successful Payment update status in estimates table.
+    *
+    * @access public
+    * @param void
+    * @name afterSuccessfulPayment
+    */
     public function afterSuccessfulPayment($data) {  
-        
-      // debug($data);
+    
        foreach($data['TransactionItem'] as $TransactionItem) {
            $this->data['Estimate']['id']=$TransactionItem['foreign_key'];
-           $this->data['Estimate']['estimate_status']='accepted'; 
+           $this->data['Estimate']['estimate_status']='accepted';  // Update status 
            $this->save($this->data);
+           
+           $estimates = $this->findById($TransactionItem['foreign_key']); 
+                   
+           $TransactionItem['model_id'] = $estimates['Estimate']['foreign_key'];
+           
+           $model=$estimates['Estimate']['model'];
+           App::uses($model, ZuhaInflector::pluginize($model) . '.Model'); 
+           $Model = new $model; 
+           if(method_exists($Model,'afterSuccessfulPayment')) { 
+               $Model->afterSuccessfulPayment($TransactionItem);
+           } 
        }
+       
+       
         
     }                                               
     

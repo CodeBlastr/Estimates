@@ -1,11 +1,11 @@
 <?php 
  
 echo '<table><tr><td class="span1">';
-
-/*echo $this->element('thumb', 
+   
+echo $this->element('thumb', 
     array(
 	    'model' => 'User',
-	    'foreignKey' => $transactionItem['foreign_key'],
+	    'foreignKey' => $transactionItem['customer_id'],
 	    'thumbSize' => 'small',
 	    'thumbWidth' => 24,
 	    'thumbHeight' => 24,
@@ -13,7 +13,7 @@ echo '<table><tr><td class="span1">';
 	    'thumbLink' => '/users/users/view/'.$transactionItem['foreign_key']
 	    ),
 	array('plugin' => 'galleries')
-); */
+); 
 echo $transactionItem['name'];
 echo '</td><td>';
 
