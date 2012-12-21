@@ -36,7 +36,7 @@ class EstimatesController extends EstimatesAppController {
  * @param type $model
  * @param type $foreignKey
  */
-	public function index($model = null, $foreignKey = null) {
+	public function index($model = null, $foreignKey = null) { 
 		$this->set('estimates', $this->paginate());
 	}
 
