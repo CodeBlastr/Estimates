@@ -1,4 +1,6 @@
 <?php
+App::uses('EstimatesAppModel', 'Estimates.Model');
+
 class Estimate extends EstimatesAppModel {
 	public $name = 'Estimate';
 	public $displayField = 'name';
