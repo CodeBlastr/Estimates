@@ -4,12 +4,12 @@ class EstimateItemsController extends EstimatesAppController {
 	public $name = 'EstimateItems';
 	public $uses = 'Estimates.EstimateItem';
 
-	function index() {
+	public function index() {
 		$this->EstimateItem->recursive = 0;
 		$this->set('estimateItems', $this->paginate());
 	}
 
-	function view($id = null) {
+	public function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid estimate item', true));
 			$this->redirect(array('action' => 'index'));
@@ -17,7 +17,7 @@ class EstimateItemsController extends EstimatesAppController {
 		$this->set('estimateItem', $this->EstimateItem->read(null, $id));
 	}
 
-	function add() {
+	public function add() {
 		if (!empty($this->request->data)) {
 			$this->EstimateItem->create();
 			if ($this->EstimateItem->save($this->request->data)) {
@@ -31,7 +31,7 @@ class EstimateItemsController extends EstimatesAppController {
 		$this->set(compact('estimates'));
 	}
 
-	function edit($id = null) {
+	public function edit($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid estimate item', true));
 			$this->redirect(array('action' => 'index'));
@@ -51,16 +51,16 @@ class EstimateItemsController extends EstimatesAppController {
 		$this->set(compact('estimates'));
 	}
 
-	function delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for estimate item', true));
+			$this->Session->setFlash(__('Invalid id for estimate item'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->EstimateItem->delete($id)) {
-			$this->Session->setFlash(__('Estimate item deleted', true));
+			$this->Session->setFlash(__('Estimate item deleted'));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Estimate item was not deleted', true));
+		$this->Session->setFlash(__('Estimate item was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
 }
