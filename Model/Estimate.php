@@ -1,5 +1,7 @@
 <?php
-App::uses('EstimatesAppModel', 'Estimates.Model'); 
+
+App::uses('EstimatesAppModel', 'Estimates.Model');
+
 
 class Estimate extends EstimatesAppModel {
 	public $name = 'Estimate';
