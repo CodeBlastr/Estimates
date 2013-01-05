@@ -1,5 +1,5 @@
 <?php
-
+  
 App::uses('EstimatesAppModel', 'Estimates.Model');
 
 
@@ -175,7 +175,9 @@ class Estimate extends EstimatesAppModel {
        
        
         
-    }                                               
+    } 
+    
+                                               
     
     
 
