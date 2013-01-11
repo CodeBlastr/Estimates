@@ -113,5 +113,14 @@ class Estimate extends EstimatesAppModel {
 		}
 		break;
 	}
+	
+	
+/**
+ * After Find Callback
+ * 
+ */
+	public function afterFind($results, $primary = false) {
+	    return $this->triggerOriginCallback('origin_afterFind', $results, $primary); 
+	}
 
 }
