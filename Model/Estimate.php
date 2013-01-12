@@ -115,6 +115,7 @@ class Estimate extends EstimatesAppModel {
 		}
 		break;
 	}
+<<<<<<< HEAD
     
     /**
  * This trims an object, formats it's values if you need to, and returns the data to be merged with the Transaction data.
@@ -180,5 +181,16 @@ class Estimate extends EstimatesAppModel {
                                                
     
     
+=======
+	
+	
+/**
+ * After Find Callback
+ * 
+ */
+	public function afterFind($results, $primary = false) {
+	    return $this->triggerOriginCallback('origin_afterFind', $results, $primary); 
+	}
+>>>>>>> 23a77a813344fed8a176e662fd9f71ed0be3a757
 
 }
