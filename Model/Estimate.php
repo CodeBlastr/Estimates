@@ -115,9 +115,8 @@ class Estimate extends EstimatesAppModel {
 		}
 		break;
 	}
-<<<<<<< HEAD
     
-    /**
+/**
  * This trims an object, formats it's values if you need to, and returns the data to be merged with the Transaction data.
  * 
  * @param string $key
@@ -148,40 +147,31 @@ class Estimate extends EstimatesAppModel {
         return $return;
     }
     
-    /**
-    * After Successful Payment update status in estimates table.
-    *
-    * @access public
-    * @param void
-    * @name afterSuccessfulPayment
-    */
-    public function afterSuccessfulPayment($data) {  
-    
-       foreach($data['TransactionItem'] as $TransactionItem) {
-           $this->data['Estimate']['id']=$TransactionItem['foreign_key'];
-           $this->data['Estimate']['estimate_status']='accepted';  // Update status 
-           $this->save($this->data);
+/**
+ * After Successful Payment update status in estimates table.
+ *
+ * @access public
+ * @param void
+ * @name afterSuccessfulPayment
+ */
+	public function afterSuccessfulPayment($data) {
+		foreach($data['TransactionItem'] as $TransactionItem) {
+            $this->data['Estimate']['id']=$TransactionItem['foreign_key'];
+            $this->data['Estimate']['estimate_status']='accepted';  // Update status 
+            $this->save($this->data);
            
-           $estimates = $this->findById($TransactionItem['foreign_key']); 
+            $estimates = $this->findById($TransactionItem['foreign_key']); 
                    
-           $TransactionItem['model_id'] = $estimates['Estimate']['foreign_key'];
+            $TransactionItem['model_id'] = $estimates['Estimate']['foreign_key'];
            
-           $model=$estimates['Estimate']['model'];
-           App::uses($model, ZuhaInflector::pluginize($model) . '.Model'); 
-           $Model = new $model; 
-           if(method_exists($Model,'afterSuccessfulPayment')) { 
-               $Model->afterSuccessfulPayment($TransactionItem);
-           } 
-       }
-       
-       
-        
+            $model=$estimates['Estimate']['model'];
+            App::uses($model, ZuhaInflector::pluginize($model) . '.Model'); 
+            $Model = new $model; 
+            if(method_exists($Model,'afterSuccessfulPayment')) { 
+            	$Model->afterSuccessfulPayment($TransactionItem);
+        	} 
+		}        
     } 
-    
-                                               
-    
-    
-=======
 	
 	
 /**
@@ -191,6 +181,5 @@ class Estimate extends EstimatesAppModel {
 	public function afterFind($results, $primary = false) {
 	    return $this->triggerOriginCallback('origin_afterFind', $results, $primary); 
 	}
->>>>>>> 23a77a813344fed8a176e662fd9f71ed0be3a757
-
+	
 }
