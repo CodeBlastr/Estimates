@@ -1,6 +1,6 @@
 <?php
 class EstimatesController extends EstimatesAppController {
-
+    
 /**
  * Name
  * 
@@ -20,7 +20,7 @@ class EstimatesController extends EstimatesAppController {
  * 
  * @var array
  */
-	public $components = array('Comments.Comments' => array('userModelClass' => 'Users.User'));
+	//public $components = array('Comments.Comments' => array('userModelClass' => 'Users.User'));
 	
 /**
  * Before Filter
@@ -36,8 +36,8 @@ class EstimatesController extends EstimatesAppController {
  * @param type $model
  * @param type $foreignKey
  */
-	public function index($model = null, $foreignKey = null) {
-		$this->set('estimates', $this->paginate());
+	public function index($model = null, $foreignKey = null) { 
+		$this->set('estimates', $this->paginate());                        
 	}
 
 /**

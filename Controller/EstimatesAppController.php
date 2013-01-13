@@ -19,7 +19,7 @@
  * @license       GPL v3 License (http://www.gnu.org/licenses/gpl.html) and Future Versions
  */
 class EstimatesAppController extends AppController {
-	
+	      
 }
 
 ?>
