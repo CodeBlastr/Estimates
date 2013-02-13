@@ -93,7 +93,7 @@ class Estimate extends EstimatesAppModel {
 				'parentForeignKey' => ''
 				));
 		}
-		return true;
+		return parent::beforeSave();
 	}
 	
 /** 

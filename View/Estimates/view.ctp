@@ -1,15 +1,28 @@
 
 <div class="well well-large pull-right last span3">
-	<span class="label label-info"><?php echo !empty($estimate['Estimate']['total']) ? ZuhaInflector::pricify($estimate['Estimate']['total']) : 'No Total'; ?> </span>
+	<span class="label label-info"><?php echo !empty($estimate['Estimate']['total']) ? 'Total : $' . ZuhaInflector::pricify($estimate['Estimate']['total']) : 'No Total'; ?> </span>
 </div>
 
 <div class="estimates view">
 	<?php
-	echo '<h4>Details ' . $this->Html->link('Edit', array('plugin' => 'estimates', 'controller' => 'estimates', 'action' => 'edit', $estimate['Estimate']['id']), array('class' => 'btn btn-mini btn-primary')) . '</h4>';
+	echo __('<h4>Estimate for %s</h4>', $this->Html->link($estimate['Creator']['full_name'], array('plugin' => 'users', 'controller' => 'users', 'action' => 'view', $estimate['Creator']['id'])));
     echo $estimate['Estimate']['introduction'];
     echo $estimate['Estimate']['description'];
-    echo $estimate['Estimate']['conclusion']; ?>
-
+    echo $estimate['Estimate']['conclusion'];
+	echo __('<h6>Services</h6>'); ?>
+	<table class="table table-hover">
+		<?php
+		foreach ($estimate['EstimateItem'] as $item) { ?>
+		<tr>
+			<td><?php echo $item['estimate_item_type']; ?></td>
+		</tr>
+		<?php
+		} ?>
+	</table>
+	<?php
+	if ($estimate['Estimate']['estimate_status'] == 'accepted') {
+		echo $this->Html->link('Confirm', array('plugin' => 'users', 'controller' => 'users', 'action' => 'confirmjob', $estimate['Estimate']['id']), array('class' => 'btn btn-primary'));
+	} ?>
 </div>
 
 
