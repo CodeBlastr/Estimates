@@ -16,13 +16,14 @@ echo $this->element('thumb',
 ); 
 echo $transactionItem['name'];
 echo '</td><td>';
-
+echo $this->Html->link('<i class="icon-trash">remove</i>', array('plugin' => 'transactions', 'controller' => 'transaction_items', 'action' => 'delete', $transactionItem['id']), array('title' => 'Remove from cart', 'escape' => false));
+   
 echo $this->Form->input("TransactionItem.{$i}.quantity", array(
     'label' => false,
     'class' => 'TransactionItemCartQty span1',
     'div' => false,
     'value' => 1,
-    'type' => 'hidden', 
+    'type' => 'hidden',
     ));  
 $transactionItemCartPrice = $transactionItem['price'] * $transactionItem['quantity']; ?>
 
