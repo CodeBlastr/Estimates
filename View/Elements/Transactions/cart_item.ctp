@@ -1,20 +1,18 @@
 <?php 
  
 echo '<table><tr><td class="span1">';
-   
-echo $this->element('thumb', 
+echo $this->Element('thumb', 
     array(
 	    'model' => 'User',
-	    'foreignKey' => $transactionItem['customer_id'],
+	    'foreignKey' => $transactionItem['assignee_id'],
 	    'thumbSize' => 'small',
 	    'thumbWidth' => 24,
 	    'thumbHeight' => 24,
         'thumbClass' => 'thumbnail',
-	    'thumbLink' => '/users/users/view/'.$transactionItem['foreign_key']
+	    'thumbLink' => '/users/users/view/'.$transactionItem['assignee_id']
 	    ),
 	array('plugin' => 'galleries')
 ); 
-echo $transactionItem['name'];
 echo '</td><td>';
 echo $this->Html->link('<i class="icon-trash">remove</i>', array('plugin' => 'transactions', 'controller' => 'transaction_items', 'action' => 'delete', $transactionItem['id']), array('title' => 'Remove from cart', 'escape' => false));
    
