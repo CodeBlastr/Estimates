@@ -1,5 +1,7 @@
 <?php
-class EstimatesController extends EstimatesAppController {
+App::uses('EstimatesAppController', 'Estimates.Controller');
+
+class _EstimatesController extends EstimatesAppController {
     
 /**
  * Name
@@ -153,4 +155,8 @@ class EstimatesController extends EstimatesAppController {
 		$this->Session->setFlash(__('Estimate was not deleted', true));
 		$this->redirect(array('action' => 'index'));
 	}
+}
+
+if (!isset($refuseInit)) {
+	class EstimatesController extends _EstimatesController {}
 }
