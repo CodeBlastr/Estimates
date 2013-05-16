@@ -11,9 +11,9 @@
 			<?php echo $this->Html->link($estimateItem['Estimate']['name'], array('controller' => 'estimates', 'action' => 'view', $estimateItem['Estimate']['id'])); ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Estimate Item Type Id'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Estimate Item Type'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $estimateItem['EstimateItem']['estimate_item_type_id']; ?>
+			<?php echo $estimateItem['EstimateItem']['estimate_item_type']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Foreign Key'); ?></dt>

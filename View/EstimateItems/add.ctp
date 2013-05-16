@@ -4,13 +4,14 @@
  		<legend><?php echo __('Add Estimate Item'); ?></legend>
 	<?php
 		echo $this->Form->input('estimate_id');
-		echo $this->Form->input('estimate_item_type_id');
+		echo $this->Form->input('estimate_item_type');
 		echo $this->Form->input('foreign_key');
 		echo $this->Form->input('model');
 		echo $this->Form->input('notes');
 		echo $this->Form->input('quantity');
 		echo $this->Form->input('price');
 		echo $this->Form->input('order');
+		echo $this->Form->input('is_reusable');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>

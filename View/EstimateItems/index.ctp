@@ -4,7 +4,7 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('estimate_id');?></th>
-			<th><?php echo $this->Paginator->sort('estimate_item_type_id');?></th>
+			<th><?php echo $this->Paginator->sort('estimate_item_type');?></th>
 			<th><?php echo $this->Paginator->sort('foreign_key');?></th>
 			<th><?php echo $this->Paginator->sort('model');?></th>
 			<th><?php echo $this->Paginator->sort('notes');?></th>
@@ -30,7 +30,7 @@
 		<td>
 			<?php echo $this->Html->link($estimateItem['Estimate']['name'], array('controller' => 'estimates', 'action' => 'view', $estimateItem['Estimate']['id'])); ?>
 		</td>
-		<td><?php echo $estimateItem['EstimateItem']['estimate_item_type_id']; ?>&nbsp;</td>
+		<td><?php echo $estimateItem['EstimateItem']['estimate_item_type']; ?>&nbsp;</td>
 		<td><?php echo $estimateItem['EstimateItem']['foreign_key']; ?>&nbsp;</td>
 		<td><?php echo $estimateItem['EstimateItem']['model']; ?>&nbsp;</td>
 		<td><?php echo $estimateItem['EstimateItem']['notes']; ?>&nbsp;</td>

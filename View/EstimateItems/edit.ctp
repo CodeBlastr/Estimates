@@ -5,7 +5,7 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('estimate_id');
-		echo $this->Form->input('estimate_item_type_id');
+		echo $this->Form->input('estimate_item_type');
 		echo $this->Form->input('foreign_key');
 		echo $this->Form->input('model');
 		echo $this->Form->input('notes');

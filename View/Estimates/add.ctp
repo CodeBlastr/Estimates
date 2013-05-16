@@ -22,7 +22,7 @@
 	<fieldset>
  		<legend><?php echo __('Add Estimate Item'); ?></legend>
 	<?php
-		echo $this->Form->input('EstimateItem.0.estimate_item_type_id');
+		echo $this->Form->input('EstimateItem.0.estimate_item_type');
 		echo $this->Form->input('EstimateItem.0.foreign_key');
 		echo $this->Form->input('EstimateItem.0.model');
 		echo $this->Form->input('EstimateItem.0.notes');
