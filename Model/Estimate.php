@@ -3,7 +3,7 @@
 App::uses('EstimatesAppModel', 'Estimates.Model');
 
 
-class Estimate extends EstimatesAppModel {
+class _Estimate extends EstimatesAppModel {
 	public $name = 'Estimate';
 	public $displayField = 'name';
 	public $validate = array(
@@ -182,4 +182,8 @@ class Estimate extends EstimatesAppModel {
 	    return $this->triggerOriginCallback('origin_afterFind', $results, $primary); 
 	}
 	
+}
+
+if (!isset($refuseInit)) {
+	class Estimate extends EstimatesAppModel {}
 }
