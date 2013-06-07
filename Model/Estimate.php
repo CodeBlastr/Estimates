@@ -164,12 +164,14 @@ class _Estimate extends EstimatesAppModel {
                    
             $TransactionItem['model_id'] = $estimates['Estimate']['foreign_key'];
            
-            $model=$estimates['Estimate']['model'];
-            App::uses($model, ZuhaInflector::pluginize($model) . '.Model'); 
-            $Model = new $model; 
-            if(method_exists($Model,'afterSuccessfulPayment')) { 
-            	$Model->afterSuccessfulPayment($TransactionItem);
-        	} 
+			if ( !empty($estimates['Estimate']['model']) ) {
+				$model=$estimates['Estimate']['model'];
+				App::uses($model, ZuhaInflector::pluginize($model) . '.Model'); 
+				$Model = new $model; 
+				if(method_exists($Model,'afterSuccessfulPayment')) { 
+					$Model->afterSuccessfulPayment($TransactionItem);
+				}
+			}
 		}        
     } 
 	
