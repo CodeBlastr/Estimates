@@ -2,7 +2,6 @@
   
 App::uses('EstimatesAppModel', 'Estimates.Model');
 
-
 class _Estimate extends EstimatesAppModel {
 	public $name = 'Estimate';
 	public $displayField = 'name';
@@ -187,5 +186,5 @@ class _Estimate extends EstimatesAppModel {
 }
 
 if (!isset($refuseInit)) {
-	class Estimate extends EstimatesAppModel {}
+	class Estimate extends _Estimate {}
 }
