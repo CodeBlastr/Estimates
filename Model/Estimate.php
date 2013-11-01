@@ -2,7 +2,7 @@
   
 App::uses('EstimatesAppModel', 'Estimates.Model');
 
-class _Estimate extends EstimatesAppModel {
+class AppEstimate extends EstimatesAppModel {
 	public $name = 'Estimate';
 	public $displayField = 'name';
 	public $validate = array(
@@ -186,5 +186,5 @@ class _Estimate extends EstimatesAppModel {
 }
 
 if (!isset($refuseInit)) {
-	class Estimate extends _Estimate {}
+	class Estimate extends AppEstimate {}
 }

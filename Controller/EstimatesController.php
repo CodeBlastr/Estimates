@@ -1,7 +1,7 @@
 <?php
 App::uses('EstimatesAppController', 'Estimates.Controller');
 
-class _EstimatesController extends EstimatesAppController {
+class AppEstimatesController extends EstimatesAppController {
     
 /**
  * Name
@@ -158,5 +158,5 @@ class _EstimatesController extends EstimatesAppController {
 }
 
 if (!isset($refuseInit)) {
-	class EstimatesController extends _EstimatesController {}
+	class EstimatesController extends AppEstimatesController {}
 }
