@@ -74,12 +74,20 @@ class AppEstimate extends EstimatesAppModel {
  *
  * @return bool
  */
-	public function beforeSave() {
+	public function beforeSave($options = array()) {
 		// give the estimate a name for easy drop down fields in other parts
 		if (empty($this->data['Estimate']['name']) && !empty($this->data['Estimate']['estimate_number']) && !empty($this->data['Estimate']['id'])) {
 			$this->data['Estimate']['name'] = __('Estimate: %s', $this->data['Estimate']['estimate_number']);
 		} else if (empty($this->data['Estimate']['name'])) {
 			$this->data['Estimate']['name'] = __('Estimate: %s', ($this->find('count') + 1));
+		}
+
+		if (!empty($this->data['Estimate']['is_accepted']) && !empty($this->data['Estimate']['id'])) {
+			// set the closed date on estimate it is the first time this is being saved with is_accepted equal to true
+			$newlyAccepted = $this->find('count', array('conditions' => array('Estimate.is_accepted' => 0, 'Estimate.id' => $this->data['Estimate']['id'])));
+			if (!empty($newlyAccepted)) {
+				$this->data['Estimate']['closed'] = date('Y-m-d');
+			}
 		}
 		
 		if (in_array('Activities', CakePlugin::loaded())) {
@@ -92,7 +100,8 @@ class AppEstimate extends EstimatesAppModel {
 				'parentForeignKey' => ''
 				));
 		}
-		return parent::beforeSave();
+
+		return parent::beforeSave($options);
 	}
 	
 /** 

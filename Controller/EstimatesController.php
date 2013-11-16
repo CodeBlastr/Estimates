@@ -82,7 +82,7 @@ class AppEstimatesController extends EstimatesAppController {
 			$this->redirect(array('action' => 'view', $id));
 		}
 	}
-    
+
 /**
  * Add method
  * 

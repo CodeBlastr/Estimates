@@ -60,6 +60,7 @@ class EstimatesSchema extends CakeSchema {
 		'discount' => array('type' => 'float', 'null' => true, 'default' => null),
 		'sub_total' => array('type' => 'float', 'null' => true, 'default' => null, 'comment' => 'convenience field'),
 		'total' => array('type' => 'float', 'null' => true, 'default' => null, 'comment' => 'convenience field for storing what could be calculated at run time'),
+		'closed' => array('type' => 'date', 'null' => true, 'default' => null, 'comment' => 'date that estimate was first changed from is_accepted = 0, to is_accepted = 1'),
 		'is_accepted' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'is_archived' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'is_reusable' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
