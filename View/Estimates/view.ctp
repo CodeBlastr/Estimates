@@ -1,6 +1,8 @@
 
 <div class="well well-large pull-right last span3">
 	<span class="label label-info"><?php echo !empty($estimate['Estimate']['total']) ? 'Total : $' . ZuhaInflector::pricify($estimate['Estimate']['total']) : 'No Total'; ?> </span>
+	<span class="label label-info"><?php echo !empty($estimate['Estimate']['created']) ? 'Created : ' . ZuhaInflector::datify($estimate['Estimate']['created']) : 'No Created Date'; ?> </span>
+	<span class="label label-info"><?php echo !empty($estimate['Estimate']['closed']) ? 'Closed : ' . ZuhaInflector::datify($estimate['Estimate']['closed']) : 'Still Open'; ?> </span>
 </div>
 
 <div class="estimates view">
