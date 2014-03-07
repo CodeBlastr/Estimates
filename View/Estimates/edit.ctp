@@ -18,7 +18,7 @@
 		//echo $this->Form->input('sub_total');
 		echo $this->Form->input('Estimate.is_accepted');
 		echo $this->Form->input('Estimate.is_archived');
-		echo $this->Form->input('Estimate.closed', array('label' => 'Date Accepted', 'type' => 'datepicker'));
+		echo $this->Form->input('Estimate.closed', array('default' => '', 'label' => 'Date Accepted', 'type' => 'datepicker'));
 		//echo $this->Form->input('recipient_id', array('empty' => '-- Optional --'));
 	?>
 	</fieldset>
