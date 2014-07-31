@@ -3,9 +3,17 @@
 App::uses('EstimatesAppModel', 'Estimates.Model');
 
 class AppEstimate extends EstimatesAppModel {
+
 	public $name = 'Estimate';
+
 	public $displayField = 'name';
+	
+	public $actsAs = array('Metable');
+
 	public $validate = array(
+		'total' => array(
+			'notempty'
+			),
 		'is_accepted' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
@@ -14,8 +22,8 @@ class AppEstimate extends EstimatesAppModel {
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				)
 			),
-		),
 		'is_archived' => array(
 			'boolean' => array(
 				'rule' => array('boolean'),
@@ -24,10 +32,9 @@ class AppEstimate extends EstimatesAppModel {
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+				)
+			)
+		);
 
 	public $belongsTo = array(
 		'Contact' => array(
@@ -36,22 +43,22 @@ class AppEstimate extends EstimatesAppModel {
 			'conditions' => array('model' => 'Contact'),
 			'fields' => '',
 			'order' => ''
-		),
+			),
 		'Recipient' => array(
 			'className' => 'Users.User',
 			'foreignKey' => 'recipient_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		),
+			),
 		'Creator' => array(
 			'className' => 'Users.User',
 			'foreignKey' => 'creator_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		),
-	);
+			),
+		);
 
 	public $hasMany = array(
 		'EstimateItem' => array(
@@ -66,8 +73,21 @@ class AppEstimate extends EstimatesAppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		),
-	);
+			),
+		'EstimateKey' => array(
+			'className' => 'Estimates.EstimateKey',
+			'foreignKey' => 'estimate_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+			)
+		);
 	
 /**
  * Before Save method
@@ -103,6 +123,17 @@ class AppEstimate extends EstimatesAppModel {
 
 		return parent::beforeSave($options);
 	}
+    
+/**
+ * Constructor
+ * 
+ */
+	public function __construct($id = null, $table = null, $ds = null) {
+		if(CakePlugin::loaded('Media')) {
+			$this->actsAs[] = 'Media.MediaAttachable';
+		}
+		parent::__construct($id, $table, $ds); // this order is imortant
+	}
 	
 /** 
  * Accept method
@@ -123,6 +154,33 @@ class AppEstimate extends EstimatesAppModel {
 		}
 		break;
 	}
+
+/**
+ * Save all method
+ * Overwritten to remove unecessary data
+ */
+ 	public function saveAll($data = null, $options = array()) {
+		// remove empty estimate keys for a saveAll
+		foreach ($data['EstimateKey'] as $index => $value) {
+			if (empty($value['email']) && empty($value['id'])) { // id is here so that we can catch empty emails and delete those keys
+				unset($data['EstimateKey'][$index]);
+			}
+			// if you send an empty email (with an id for estimate keys) then delete that key
+			if (!empty($value['id']) && empty($value['email'])) {
+				if ($this->EstimateKey->delete($value['id'])) {
+					unset($data['EstimateKey'][$index]);
+				} else {
+					debug('Error deleting empty key, report to admin');
+					debug($this->data);
+					exit;
+				}
+			}
+		}	
+		if (empty($data['EstimateKey'][0])) {
+			unset($data['EstimateKey']);
+		}
+		return parent::saveAll($data, $options);
+ 	}
     
 /**
  * This trims an object, formats it's values if you need to, and returns the data to be merged with the Transaction data.
